@@ -4,7 +4,7 @@ $(document).ready(function(){
   var sendMessage = function(input, username){
     $.ajax('https://api.parse.com/1/classes/tuckertest1', {
       contentType: 'application/json',
-      data: '{"username": "' + username + '", "text": "' + input + '"}',
+      data: '{"date": "-createdAt", "username": "' + username + '", "text": "' + input + '"}',
       type: 'POST',
       success: function(data){
         $('#messageText').val('');
