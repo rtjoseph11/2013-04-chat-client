@@ -20,14 +20,14 @@ body {
 }
 
 #main ul {
-    padding-left: 20px;
+    padding: 20px;
     list-style: none;
     height: 400px;
     background-color: #ddd;
     overflow: auto;
 }
 #main li {
-    padding: 10px;
+    padding: 5px 10px;
 }
 
 #main .error {
