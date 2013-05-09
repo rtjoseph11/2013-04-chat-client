@@ -1,6 +1,8 @@
 $(document).ready(function(){
+  var messages = [];
+  var friends = {};
   var sendMessage = function(input, username){
-    $.ajax('https://api.parse.com/1/classes/tuckertest', {
+    $.ajax('https://api.parse.com/1/classes/tuckertest1', {
       contentType: 'application/json',
       data: '{"username": "' + username + '", "text": "' + input + '"}',
       type: 'POST',
@@ -14,12 +16,22 @@ $(document).ready(function(){
     });
   };
   var getMessages = function(){
-    $.ajax('https://api.parse.com/1/classes/tuckertest', {
+    $.ajax('https://api.parse.com/1/classes/tuckertest1', {
       contentType: 'application/json',
       success: function(data){
         for (var i = messages.length; i < data.results.length; i++){
-          var message = data.results[i].username + ' (' +jQuery.timeago(data.results[i].createdAt) + '): ' + data.results[i].text;
-          var $li = $('<li></li>').text(message);
+          var anchor = data.results[i].username;
+          var message = ' (' +jQuery.timeago(data.results[i].createdAt) + '): ' + data.results[i].text;
+          var $a = $('<a href="#"></a>').text(anchor).addClass(anchor).on('click', function(e){
+            e.preventDefault;
+            var name = '.' + $(this).text();
+            $(name).parent().toggleClass('friend');
+            friends[anchor] = true;
+          });
+          var $li = $('<li></li>').text(message).prepend($a);
+          if (friends[anchor]){
+            $li.addClass('friend');
+          }
          $('#main ul').append($li);
         }
         messages = data.results;
@@ -29,7 +41,6 @@ $(document).ready(function(){
       }
     });
   };
-  var messages = [];
   var chatInterval = setInterval(getMessages, 1000);
   $('#sendMessage').on('click', function(){
     sendMessage($('#messageText').val(), window.location.search.slice(10));
