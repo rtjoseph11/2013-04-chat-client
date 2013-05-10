@@ -55,9 +55,13 @@ var getMessages = function(){
 var getRooms = function(){
   $.ajax('https://api.parse.com/1/classes/messages', {
     contentType: 'application/json',
-    data: {},
+    data: {'where' : '{"roomname" : {"$exists": true}}', 'limit' : '1000'},
     success: function(data){
-
+      var rooms = {};
+      for (var i = 0; i <data.results.length; i++){
+        rooms[data.results[i].roomname] = true;
+      }
+      console.log(rooms);
     },
     error: function(data) {
 
