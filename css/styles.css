@@ -28,6 +28,8 @@ body {
 }
 #main li {
     padding: 5px 10px;
+    height: 25px;
+    line-height: 1em;
 }
 
 #main .error {
