@@ -2,9 +2,9 @@ var date;
 var friends = {};
 var room = '';
 var sendMessage = function(input, username){
-  $.ajax('https://api.parse.com/1/classes/' + room, {
+  $.ajax('https://api.parse.com/1/classes/messages', {
     contentType: 'application/json',
-    data: '{"username": "' + username + '", "text": "' + input + '"}',
+    data: '{"username": "' + username + '", "text": "' + input + '", "roomname": "' + room + '"}',
     type: 'POST',
     success: function(data){
       $('#messageText').val('');
@@ -16,7 +16,7 @@ var sendMessage = function(input, username){
   });
 };
 var getMessages = function(){
-  $.ajax('https://api.parse.com/1/classes/' + room, {
+  $.ajax('https://api.parse.com/1/classes/messages', {
     contentType: 'application/json',
     data: {'where' : '{"createdAt":{"$gt":{"__type":"Date", "iso" :"' + date + '"}}}', 'order': 'createdAt'},
     success: function(data){

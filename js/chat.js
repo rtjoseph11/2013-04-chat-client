@@ -20,7 +20,7 @@ $(document).ready(function(){
     room = prompt('what chat room do you want to join?');
     $('#main h2').text('Chat Room: ' + room);
     $('li').remove();
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < 11; i++) {
       $('#main ul').append($('<li/>'));
     }
     $('#join').text('change room');
