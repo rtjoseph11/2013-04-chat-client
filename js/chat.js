@@ -5,19 +5,15 @@ $(document).ready(function(){
     }
   }, 500);
   $('#sendMessage').on('click', function(){
-    if (room){
+    if (room && $('#messageText').val()){
       sendMessage($('#messageText').val(), window.location.search.slice(10));
-    } else {
-      alert('please join a room!');
     }
   });
   $('#messageText').on('keyup', function(event){
-    if (room){
+    if (room && $('#messageText').val()){
       if (event.which === 13){
         sendMessage($('#messageText').val(), window.location.search.slice(10));
       }
-    } else {
-      alert('please join a room!');
     }
   });
   $('#join').on('click', function(){
@@ -25,7 +21,8 @@ $(document).ready(function(){
     $('#main h2').text('Chat Room: ' + room);
     $('li').remove();
     $('#join').text('change room');
-    messages = [];
+    date = new Date();
+    date = date.toISOString();
     friends = {};
   });
 });

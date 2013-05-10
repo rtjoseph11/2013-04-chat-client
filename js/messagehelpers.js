@@ -1,4 +1,4 @@
-var messages = [];
+var date;
 var friends = {};
 var room = '';
 var sendMessage = function(input, username){
@@ -18,9 +18,9 @@ var sendMessage = function(input, username){
 var getMessages = function(){
   $.ajax('https://api.parse.com/1/classes/' + room, {
     contentType: 'application/json',
-    __type: 'Date',
+    data: {'where' : '{"createdAt":{"$gt":{"__type":"Date", "iso" :"' + date + '"}}}', 'order': 'createdAt'},
     success: function(data){
-      for (var i = messages.length; i < data.results.length; i++){
+      for (var i = 0; i < data.results.length; i++){
         var anchor = data.results[i].username;
         var message = ' (' +jQuery.timeago(data.results[i].createdAt) + '): ' + data.results[i].text;
         var $a = $('<a href="#"></a>').text(anchor).addClass(anchor).on('click', function(e){
@@ -36,7 +36,8 @@ var getMessages = function(){
        $('#main ul').append($li);
        $('#main ul').animate({ scrollTop: $('ul').prop("scrollHeight") - $('ul').height() }, 1);
       }
-      messages = data.results;
+      if(data.results.length){
+        date = data.results[data.results.length - 1].createdAt;}
     },
     error: function(data) {
       console.log('message request failed');
